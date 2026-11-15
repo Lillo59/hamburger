@@ -2,97 +2,135 @@
   <defs>
     <!-- tratto a mano: linee tremolanti, contorno più pesante in basso a destra, stampa consumata -->
     <filter id="mano" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="onda"/>
-      <feDisplacementMap in="SourceGraphic" in2="onda" scale="4" xChannelSelector="R" yChannelSelector="G" result="disegno"/>
-      <feOffset in="disegno" dx="2.5" dy="3" result="spostato"/>
-      <feFlood flood-color="#1A1A1A"/>
-      <feComposite in2="spostato" operator="in" result="ombra"/>
-      <feMerge><feMergeNode in="ombra"/><feMergeNode in="disegno"/></feMerge>
+      <!-- prima passata: tratto tremolante -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="7" result="ondaA"/>
+      <feDisplacementMap in="SourceGraphic" in2="ondaA" scale="6" xChannelSelector="R" yChannelSelector="G" result="passata1"/>
+      <!-- seconda passata: solo le linee di grafite, ripassate storte -->
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -6 -6 -6 0 4.4" result="scuri"/>
+      <feComposite in="scuri" in2="SourceAlpha" operator="in" result="linee"/>
+      <feFlood flood-color="#33302E" flood-opacity=".8"/>
+      <feComposite in2="linee" operator="in" result="grafite"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="23" result="ondaB"/>
+      <feDisplacementMap in="grafite" in2="ondaB" scale="9" xChannelSelector="G" yChannelSelector="R" result="passata2"/>
+      <feMerge result="schizzo"><feMergeNode in="passata1"/><feMergeNode in="passata2"/></feMerge>
+      <!-- grana della matita sulla carta -->
+      <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" seed="5" result="grana"/>
+      <feColorMatrix in="grana" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  10 0 0 0 -5.9" result="puntini"/>
+      <feComposite in="schizzo" in2="puntini" operator="out" result="consumato"/>
+      <feGaussianBlur in="consumato" stdDeviation="0.3"/>
     </filter>
+    <pattern id="h-rosso" width="5.5" height="5.5" patternUnits="userSpaceOnUse" patternTransform="rotate(-52)">
+      <rect width="5.5" height="5.5" fill="#dd867e"/>
+      <path d="M0 2.75 H5.5" stroke="#C4281C" stroke-width="2.6" fill="none"/>
+    </pattern>
+    <pattern id="h-senape" width="5.5" height="5.5" patternUnits="userSpaceOnUse" patternTransform="rotate(-43)">
+      <rect width="5.5" height="5.5" fill="#f6d180"/>
+      <path d="M0 2.75 H5.5" stroke="#F2B632" stroke-width="2.6" fill="none"/>
+    </pattern>
+    <pattern id="h-bruno" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-34)">
+      <rect width="5" height="5" fill="#ac887f"/>
+      <path d="M0 2.5 H5" stroke="#6B2A1E" stroke-width="2.6" fill="none"/>
+    </pattern>
+    <pattern id="h-cheddar" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-25)">
+      <rect width="6" height="6" fill="#fce192"/>
+      <path d="M0 3.0 H6" stroke="#FCD667" stroke-width="2.4" fill="none"/>
+    </pattern>
+    <pattern id="h-verde" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-16)">
+      <rect width="5" height="5" fill="#79aba9"/>
+      <path d="M0 2.5 H5" stroke="#0E6B6B" stroke-width="2.4" fill="none"/>
+    </pattern>
+    <pattern id="h-grafite" width="3.4" height="3.4" patternUnits="userSpaceOnUse" patternTransform="rotate(-7)">
+      <rect width="3.4" height="3.4" fill="#797774"/>
+      <path d="M0 1.7 H3.4" stroke="#33302E" stroke-width="2.2" fill="none"/>
+    </pattern>
+    <pattern id="h-paglia" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(2)">
+      <rect width="7" height="7" fill="#f1e4c5"/>
+      <path d="M0 3.5 H7" stroke="#E3C98A" stroke-width="1.6" fill="none"/>
+    </pattern>
     <clipPath id="clip-pane"><path d="M56 194 C50 66 250 66 244 194 Z"/></clipPath>
     <clipPath id="clip-base"><path d="M64 268 H236 V284 C236 300 222 306 208 306 H92 C78 306 64 300 64 284 Z"/></clipPath>
     <g id="guanto">
       <path d="M-24 6 C-32 -10 -20 -27 -5 -23 C-3 -37 17 -38 20 -23 C31 -28 41 -13 31 -3 C41 6 34 21 21 18 C14 33 -16 32 -24 6 Z" fill="#FFFFFF"/>
-      <path d="M-5 -23 C-2 -15 -2 -9 -5 -3 M20 -23 C17 -15 15 -9 11 -5 M31 -3 C24 0 20 3 17 7" fill="none" stroke-width="4"/>
-      <path d="M-18 14 C-10 22 6 26 18 20" fill="none" stroke-width="4"/>
+      <path d="M-5 -23 C-2 -15 -2 -9 -5 -3 M20 -23 C17 -15 15 -9 11 -5 M31 -3 C24 0 20 3 17 7" fill="none" stroke-width="2"/>
+      <path d="M-18 14 C-10 22 6 26 18 20" fill="none" stroke-width="2"/>
     </g>
   </defs>
 
-  <g filter="url(#mano)" stroke="#1A1A1A" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">
+  <g filter="url(#mano)" stroke="#33302E" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
     <g transform="rotate(-4 150 220)">
       <!-- gambe a tubo -->
-      <path d="M124 300 C116 330 122 352 108 380" fill="none" stroke-width="12"/>
-      <path d="M180 300 C196 334 232 344 268 326" fill="none" stroke-width="12"/>
+      <path d="M124 300 C116 330 122 352 108 380" fill="none" stroke="url(#h-grafite)" stroke-width="11"/>
+      <path d="M180 300 C196 334 232 344 268 326" fill="none" stroke="url(#h-grafite)" stroke-width="11"/>
       <!-- ombra a terra -->
-      <ellipse cx="128" cy="414" rx="118" ry="9" fill="#1A1A1A" stroke="none"/>
+      <ellipse cx="128" cy="414" rx="118" ry="9" fill="url(#h-grafite)" stroke="none"/>
       <!-- scarpe -->
-      <path d="M118 362 C146 364 152 408 122 412 L58 412 C24 412 22 376 52 366 C66 360 76 372 90 366 C100 360 108 360 118 362 Z" fill="#C4281C"/>
+      <path d="M118 362 C146 364 152 408 122 412 L58 412 C24 412 22 376 52 366 C66 360 76 372 90 366 C100 360 108 360 118 362 Z" fill="url(#h-rosso)"/>
       <path d="M48 386 C52 378 60 374 68 374" fill="none" stroke="#FCFAF5" stroke-width="6"/>
       <g transform="rotate(-36 276 320)">
-        <path d="M258 296 C286 288 310 314 294 338 L270 376 C252 398 218 378 234 352 C244 336 240 304 258 296 Z" fill="#C4281C"/>
+        <path d="M258 296 C286 288 310 314 294 338 L270 376 C252 398 218 378 234 352 C244 336 240 304 258 296 Z" fill="url(#h-rosso)"/>
         <path d="M276 306 C286 310 290 320 286 330" fill="none" stroke="#FCFAF5" stroke-width="6"/>
       </g>
 
       <!-- braccio destro che tocca il cappello -->
-      <path d="M238 228 C288 224 300 158 262 112" fill="none" stroke-width="12"/>
+      <path d="M238 228 C288 224 300 158 262 112" fill="none" stroke="url(#h-grafite)" stroke-width="11"/>
 
       <!-- pane sotto -->
-      <path d="M64 268 H236 V284 C236 300 222 306 208 306 H92 C78 306 64 300 64 284 Z" fill="#F2B632"/>
+      <path d="M64 268 H236 V284 C236 300 222 306 208 306 H92 C78 306 64 300 64 284 Z" fill="url(#h-senape)"/>
       <!-- smash 1 -->
-      <path d="M54 252 C52 240 62 238 72 239 C90 236 110 241 130 238 C160 241 196 236 228 239 C238 238 248 242 246 253 C246 264 236 268 226 268 C180 271 120 271 74 268 C62 268 54 262 54 252 Z" fill="#6B2A1E"/>
+      <path d="M54 252 C52 240 62 238 72 239 C90 236 110 241 130 238 C160 241 196 236 228 239 C238 238 248 242 246 253 C246 264 236 268 226 268 C180 271 120 271 74 268 C62 268 54 262 54 252 Z" fill="url(#h-bruno)"/>
       <!-- cheddar 1 -->
-      <path d="M52 232 H248 L234 246 L216 241 L202 262 L188 241 L122 241 L106 256 L92 241 L70 246 Z" fill="#FCD667"/>
+      <path d="M52 232 H248 L234 246 L216 241 L202 262 L188 241 L122 241 L106 256 L92 241 L70 246 Z" fill="url(#h-cheddar)"/>
       <!-- smash 2 -->
-      <path d="M54 220 C52 208 62 206 72 207 C96 204 118 209 140 206 C170 209 200 204 228 207 C238 206 248 210 246 221 C246 232 236 236 226 236 C180 239 120 239 74 236 C62 236 54 230 54 220 Z" fill="#6B2A1E"/>
+      <path d="M54 220 C52 208 62 206 72 207 C96 204 118 209 140 206 C170 209 200 204 228 207 C238 206 248 210 246 221 C246 232 236 236 226 236 C180 239 120 239 74 236 C62 236 54 230 54 220 Z" fill="url(#h-bruno)"/>
       <!-- cheddar 2 -->
-      <path d="M52 202 H248 L232 216 L214 211 L198 234 L184 211 L114 211 L98 228 L84 211 L68 216 Z" fill="#FCD667"/>
+      <path d="M52 202 H248 L232 216 L214 211 L198 234 L184 211 L114 211 L98 228 L84 211 L68 216 Z" fill="url(#h-cheddar)"/>
       <!-- lattuga -->
-      <path d="M44 194 C54 210 66 210 76 200 C84 214 98 214 106 201 C114 214 128 214 136 201 C144 214 158 214 166 201 C174 214 188 214 196 201 C204 214 218 214 226 200 C236 210 248 208 256 194 C252 186 244 184 234 184 H66 C56 184 48 186 44 194 Z" fill="#0E6B6B"/>
+      <path d="M44 194 C54 210 66 210 76 200 C84 214 98 214 106 201 C114 214 128 214 136 201 C144 214 158 214 166 201 C174 214 188 214 196 201 C204 214 218 214 226 200 C236 210 248 208 256 194 C252 186 244 184 234 184 H66 C56 184 48 186 44 194 Z" fill="url(#h-verde)"/>
       <!-- pane sopra (faccia) -->
-      <path d="M56 194 C50 66 250 66 244 194 Z" fill="#F2B632"/>
-      <path d="M74 150 C76 132 82 120 92 110" fill="none" stroke="#FCFAF5" stroke-width="5"/>
+      <path d="M56 194 C50 66 250 66 244 194 Z" fill="url(#h-senape)"/>
+      <path d="M74 150 C76 132 82 120 92 110" fill="none" stroke="#FCFAF5" stroke-width="2.4"/>
 
       <!-- occhi -->
-      <ellipse cx="130" cy="142" rx="20" ry="32" fill="#FFFFFF" stroke-width="4.5"/>
-      <ellipse cx="170" cy="142" rx="20" ry="32" fill="#FFFFFF" stroke-width="4.5"/>
-      <ellipse cx="136" cy="152" rx="11" ry="18" fill="#1A1A1A" stroke="none"/>
-      <ellipse cx="166" cy="152" rx="11" ry="18" fill="#1A1A1A" stroke="none"/>
+      <ellipse cx="130" cy="142" rx="20" ry="32" fill="#FFFFFF" stroke-width="2.2"/>
+      <ellipse cx="170" cy="142" rx="20" ry="32" fill="#FFFFFF" stroke-width="2.2"/>
+      <ellipse cx="136" cy="152" rx="11" ry="18" fill="url(#h-grafite)" stroke="none"/>
+      <ellipse cx="166" cy="152" rx="11" ry="18" fill="url(#h-grafite)" stroke="none"/>
       <path d="M136 151 L150 136 L150 153 Z" fill="#FFFFFF" stroke="none"/>
       <path d="M166 151 L180 136 L180 153 Z" fill="#FFFFFF" stroke="none"/>
       <!-- sorriso -->
-      <path d="M100 172 C120 183 180 183 200 172 C196 206 106 208 100 172 Z" fill="#1A1A1A"/>
-      <path d="M128 196 C138 186 162 186 172 196 C160 203 140 203 128 196 Z" fill="#C4281C" stroke="none"/>
-      <path d="M92 164 C98 164 102 168 102 174 M208 164 C202 164 198 168 198 174" fill="none" stroke-width="4.5"/>
-      <ellipse cx="84" cy="176" rx="9" ry="5" fill="#C4281C" stroke="none" opacity=".8"/>
-      <ellipse cx="216" cy="176" rx="9" ry="5" fill="#C4281C" stroke="none" opacity=".8"/>
+      <path d="M100 172 C120 183 180 183 200 172 C196 206 106 208 100 172 Z" fill="url(#h-grafite)"/>
+      <path d="M128 196 C138 186 162 186 172 196 C160 203 140 203 128 196 Z" fill="url(#h-rosso)" stroke="none"/>
+      <path d="M92 164 C98 164 102 168 102 174 M208 164 C202 164 198 168 198 174" fill="none" stroke-width="2.2"/>
+      <ellipse cx="84" cy="176" rx="9" ry="5" fill="url(#h-rosso)" stroke="none" opacity=".8"/>
+      <ellipse cx="216" cy="176" rx="9" ry="5" fill="url(#h-rosso)" stroke="none" opacity=".8"/>
 
       <!-- cappello di paglia -->
       <g transform="translate(0 -18) rotate(-10 150 100)">
-        <path d="M34 104 C40 86 96 82 150 82 C204 82 262 86 266 104 C262 124 204 128 150 128 C96 128 38 124 34 104 Z" fill="#F5E3B3"/>
-        <path d="M98 100 C92 40 206 38 202 100 C186 110 114 110 98 100 Z" fill="#F5E3B3"/>
-        <path d="M97 84 C114 94 186 94 203 84 L202 100 C186 110 114 110 98 100 Z" fill="#C4281C"/>
-        <path d="M116 60 l12 7 M140 50 l12 7 M166 52 l12 7 M128 74 l12 6 M156 70 l12 7 M182 68 l9 5 M50 106 l14 3 M238 104 l14 -3 M86 118 l12 2 M204 119 l12 -2 M140 121 l14 0" fill="none" stroke-width="2.5" opacity=".6"/>
+        <path d="M34 104 C40 86 96 82 150 82 C204 82 262 86 266 104 C262 124 204 128 150 128 C96 128 38 124 34 104 Z" fill="url(#h-paglia)"/>
+        <path d="M98 100 C92 40 206 38 202 100 C186 110 114 110 98 100 Z" fill="url(#h-paglia)"/>
+        <path d="M97 84 C114 94 186 94 203 84 L202 100 C186 110 114 110 98 100 Z" fill="url(#h-rosso)"/>
+        <path d="M116 60 l12 7 M140 50 l12 7 M166 52 l12 7 M128 74 l12 6 M156 70 l12 7 M182 68 l9 5 M50 106 l14 3 M238 104 l14 -3 M86 118 l12 2 M204 119 l12 -2 M140 121 l14 0" fill="none" stroke-width="1.5" opacity=".6"/>
         <!-- rametto di basilico -->
-        <path d="M194 94 C202 78 208 62 212 44" fill="none" stroke-width="4.5"/>
-        <path d="M202 78 C182 76 172 60 178 44 C196 48 206 62 202 78 Z" fill="#0E6B6B" stroke-width="4"/>
-        <path d="M207 66 C224 70 238 58 240 40 C222 38 208 48 207 66 Z" fill="#0E6B6B" stroke-width="4"/>
-        <path d="M212 44 C200 34 202 16 214 8 C226 20 224 36 212 44 Z" fill="#0E6B6B" stroke-width="4"/>
+        <path d="M194 94 C202 78 208 62 212 44" fill="none" stroke-width="2.2"/>
+        <path d="M202 78 C182 76 172 60 178 44 C196 48 206 62 202 78 Z" fill="url(#h-verde)" stroke-width="1.3"/>
+        <path d="M207 66 C224 70 238 58 240 40 C222 38 208 48 207 66 Z" fill="url(#h-verde)" stroke-width="1.3"/>
+        <path d="M212 44 C200 34 202 16 214 8 C226 20 224 36 212 44 Z" fill="url(#h-verde)" stroke-width="1.3"/>
         <path d="M182 50 L198 72 M234 44 L212 62 M214 14 L212 38" fill="none" stroke-width="2" opacity=".6"/>
       </g>
       <use href="#guanto" transform="translate(258 106) rotate(150) scale(.95)"/>
 
       <!-- braccio sinistro alzato con spatola -->
-      <path d="M62 226 C14 222 -4 176 22 144" fill="none" stroke-width="12"/>
+      <path d="M62 226 C14 222 -4 176 22 144" fill="none" stroke="url(#h-grafite)" stroke-width="11"/>
       <g transform="rotate(-16 26 136)">
-        <path d="M26 138 V70" fill="none" stroke-width="10"/>
-        <path d="M26 134 V74" fill="none" stroke="#C4281C" stroke-width="4"/>
+        <path d="M26 138 V70" fill="none" stroke-width="6"/>
+        <path d="M26 134 V74" fill="none" stroke="#C4281C" stroke-width="1.3"/>
         <path d="M0 10 H52 C57 10 60 13 60 18 V56 C60 66 54 72 44 72 H8 C-2 72 -8 66 -8 56 V18 C-8 13 -5 10 0 10 Z" fill="#FCFAF5"/>
-        <path d="M10 26 V54 M26 26 V54 M42 26 V54" fill="none" stroke-width="4.5"/>
+        <path d="M10 26 V54 M26 26 V54 M42 26 V54" fill="none" stroke-width="2.2"/>
       </g>
       <use href="#guanto" transform="translate(24 142) rotate(-20)"/>
 
       <!-- lampi di allegria -->
-      <path d="M-34 44 l-12 -8 M-24 28 l-6 -14 M-38 64 l-14 0" fill="none" stroke-width="4.5"/>
+      <path d="M-34 44 l-12 -8 M-24 28 l-6 -14 M-38 64 l-14 0" fill="none" stroke-width="2.2"/>
     </g>
   </g>
 </svg>

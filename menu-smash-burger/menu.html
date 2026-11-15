@@ -315,6 +315,7 @@
     white-space: pre;
   }
   .cartone .l { display: inline-block; }
+  .cartone .p { display: inline-block; white-space: nowrap; }
   .cartone .l:nth-child(3n+1) { transform: rotate(-5deg) translateY(-0.4mm); }
   .cartone .l:nth-child(3n+2) { transform: rotate(3deg) translateY(0.5mm); }
   .cartone .l:nth-child(3n) { transform: rotate(-1deg) translateY(-0.1mm); }
@@ -570,9 +571,13 @@
       Array.prototype.slice.call(nodo.childNodes).forEach(function (n) {
         if (n.nodeType === 1) return avvolgi(n);
         var f = document.createDocumentFragment();
-        n.textContent.split('').forEach(function (c) {
-          if (c.trim() === '') return f.appendChild(document.createTextNode(c));
-          var sp = document.createElement('span'); sp.className = 'l'; sp.textContent = c; f.appendChild(sp);
+        n.textContent.split(/(\s+)/).forEach(function (parola) {
+          if (parola.trim() === '') return f.appendChild(document.createTextNode(parola));
+          var p = document.createElement('span'); p.className = 'p';
+          parola.split('').forEach(function (c) {
+            var sp = document.createElement('span'); sp.className = 'l'; sp.textContent = c; p.appendChild(sp);
+          });
+          f.appendChild(p);
         });
         nodo.replaceChild(f, n);
       });
