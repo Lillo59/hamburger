@@ -126,39 +126,10 @@
   .retro .insegna .logo { max-height: 17mm; }
   .retro .sottoinsegna { font-size: 20pt; }
 
-  /* ---------- Foto ---------- */
-  .foto {
-    position: relative;
-    overflow: hidden;
-    border: 0.7mm solid var(--nero);
-    border-radius: 3mm;
-    background: var(--nero);
-    min-height: 26mm;
-  }
-  .foto img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .foto.mancante {
-    border: 0.6mm dashed var(--petrolio);
-    background: rgba(14, 107, 107, .06);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .foto.mancante::after {
-    content: attr(data-nome);
-    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
-    font-weight: 600;
-    font-size: 13pt;
-    letter-spacing: 0.04em;
-    color: var(--petrolio);
-  }
-  .hero { flex: 1 1 32mm; min-height: 20mm; }
+  /* ---------- Mascotte ---------- */
+  .mascotte { display: flex; align-items: center; justify-content: center; min-height: 0; }
+  .mascotte img { display: block; width: 100%; height: 100%; max-height: 78mm; object-fit: contain; }
+  .mascotte.specchiata img { transform: scaleX(-1); max-height: 62mm; }
 
   /* ---------- Sezioni ---------- */
   .sezione { display: flex; flex-direction: column; }
@@ -237,12 +208,12 @@
   .due { grid-template-columns: 1fr 1fr; }
 
   /* ---------- Fronte ---------- */
-  .fronte { gap: 3.4mm; }
-  .fronte .voci { gap: 2mm; }
+  .fronte { gap: 0; justify-content: space-between; }
+  .fronte .voci { gap: 3.6mm; }
+  .fronte .corsivo { font-size: 58pt; }
+  .fronte .sottoinsegna { font-size: 28pt; }
   .manzo { grid-template-columns: 131mm 1fr; flex: none; }
-  .titolo.intera { flex: none; margin-bottom: -1.5mm; }
-  .laterale { display: flex; flex-direction: column; gap: 3mm; }
-  .laterale .foto { flex: 1 1 0; }
+  .titolo.intera { flex: none; margin-bottom: -3mm; }
 
   .mese {
     flex: none;
@@ -313,7 +284,6 @@
 
   /* ---------- Retro ---------- */
   .dividere { grid-template-columns: 108mm 1fr; flex: 1 1 auto; }
-  .dividere .foto { min-height: 30mm; }
   .retro .voci { gap: 2.6mm; }
   .retro .colonne.due { flex: none; column-gap: 9mm; }
 
@@ -348,10 +318,6 @@
     <div class="sottoinsegna"><i class="stella"></i><span>SMASH BURGER</span><i class="stella"></i></div>
   </header>
 
-  <figure class="foto hero" data-nome="hero.jpg">
-    <img src="foto/hero.jpg" alt="" onerror="this.parentNode.classList.add('mancante');this.remove()">
-  </figure>
-
   <div class="titolo intera">
     <h2>SMASH DI MANZO</h2>
     <span class="nota">Tutti con doppio smash 2&nbsp;×&nbsp;90&nbsp;g</span>
@@ -383,14 +349,7 @@
       </div>
     </section>
 
-    <aside class="laterale">
-      <figure class="foto" data-nome="oklahoma.jpg">
-        <img src="foto/oklahoma.jpg" alt="" onerror="this.parentNode.classList.add('mancante');this.remove()">
-      </figure>
-      <figure class="foto" data-nome="cheese-skirt.jpg">
-        <img src="foto/cheese-skirt.jpg" alt="" onerror="this.parentNode.classList.add('mancante');this.remove()">
-      </figure>
-    </aside>
+    <div class="mascotte"><img src="mascotte.svg" alt=""></div>
   </div>
 
   <div class="colonne manzo">
@@ -461,9 +420,7 @@
       </div>
     </section>
 
-    <figure class="foto" data-nome="smash-tacos.jpg">
-      <img src="foto/smash-tacos.jpg" alt="" onerror="this.parentNode.classList.add('mancante');this.remove()">
-    </figure>
+    <div class="mascotte specchiata"><img src="mascotte.svg" alt=""></div>
   </div>
 
   <div class="colonne due">

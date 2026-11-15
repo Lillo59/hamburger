@@ -1,7 +1,0 @@
-Metti qui le foto (formato orizzontale, JPG):
-- hero.jpg
-- oklahoma.jpg
-- cheese-skirt.jpg
-- smash-tacos.jpg
-
-Se una foto manca, nel menu compare un riquadro tratteggiato con il suo nome.
