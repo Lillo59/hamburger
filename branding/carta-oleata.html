@@ -1,0 +1,17 @@
+<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><title>Carta oleata 30 × 40 cm</title>
+<link rel="stylesheet" href="marchio.css">
+<style>
+@page { size: 300mm 400mm; margin: 0; }
+.foglio { width: 300mm; height: 400mm; background: #fff; display: grid; grid-template-columns: repeat(4, 75mm); grid-template-rows: repeat(5, 80mm); }
+.cella { display: flex; align-items: center; justify-content: center; position: relative; }
+.cella > * { transform: rotate(-12deg); }
+.cella .logo { width: 50mm; height: 50mm; }
+.cella img { height: 54mm; }
+.cella::after { content: ""; position: absolute; right: -2.5mm; bottom: -2.5mm; width: 5mm; height: 5mm; background: var(--senape);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+</style></head><body><div class="foglio" id="f"></div>
+<script>
+const f = document.getElementById('f');
+for (let r = 0; r < 5; r++) for (let c = 0; c < 4; c++)
+  f.insertAdjacentHTML('beforeend', '<div class="cella">' + ((r + c) % 2 ? '<img src="../menu-smash-burger/mascotte.png" alt="">' : '<div class="logo"></div>') + '</div>');
+</script><script src="marchio.js"></script></body></html>

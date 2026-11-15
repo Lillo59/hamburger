@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><title>Adesivi – foglio A4</title>
+<link rel="stylesheet" href="marchio.css">
+<style>
+@page { size: A4; margin: 0; }
+.foglio { width: 210mm; height: 297mm; padding: 12mm 10mm; display: flex; flex-direction: column; gap: 7mm; background: #fff; }
+.riga { display: flex; justify-content: space-between; }
+.tondo { width: 60mm; height: 60mm; }
+.chiudi { width: 92mm; height: 40mm; border: .3mm solid #999; border-radius: 3mm; background: var(--crema); overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between; text-align: center; --q: 4mm; }
+.chiudi .scacchi { border-width: .3mm 0; }
+.chiudi .corsivo { font-size: 23pt; }
+.chiudi .condensato { font-size: 12pt; margin-top: .5mm; }
+.chiudi p { font-size: 8.5pt; margin-top: 1.2mm; }
+</style></head><body><div class="foglio" id="f"></div>
+<script>
+const f = document.getElementById('f');
+const tondi = '<div class="riga">' + '<div class="tondo logo"></div>'.repeat(3) + '</div>';
+const chiudi = '<div class="chiudi"><div class="scacchi"></div><div><div class="corsivo">Il Giardino del Gusto</div><div class="condensato">SMASH BURGER</div><p>Via Capitano F. Zuccarello 101 – Patti Marina (ME)</p></div><div class="scacchi"></div></div>';
+f.innerHTML = tondi + tondi + ('<div class="riga">' + chiudi + chiudi + '</div>').repeat(3);
+</script><script src="marchio.js"></script></body></html>
