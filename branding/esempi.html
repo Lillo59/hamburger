@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><title>Esempi di packaging – Il Giardino del Gusto</title>
+<link rel="stylesheet" href="marchio.css">
+<style>
+@page { size: A4 landscape; margin: 0; }
+.foglio { width: 297mm; height: 210mm; padding: 10mm 12mm 8mm; background: var(--crema); display: flex; flex-direction: column; gap: 5mm; }
+h1 { font-family: "Rammetto One"; font-weight: 400; font-size: 22pt; color: var(--rosso); -webkit-text-stroke: .2em var(--nero); paint-order: stroke fill; text-shadow: .1em .12em 0 var(--nero); text-align: center; }
+.griglia { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr; gap: 4mm 8mm; }
+.pezzo { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 2.5mm; }
+.scena { flex: 1; width: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+.pezzo p { font-size: 12pt; letter-spacing: .04em; text-transform: uppercase; }
+.om { filter: drop-shadow(1.2mm 1.6mm 0 rgba(26,26,26,.28)); }
+
+/* sacchetto */
+.sacchetto { width: 56mm; height: 72mm; background: #D2A76C; border: .6mm solid var(--nero); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 5mm 0 3mm; --q: 5mm;
+  clip-path: polygon(0 3%, 5% 0, 10% 3%, 15% 0, 20% 3%, 25% 0, 30% 3%, 35% 0, 40% 3%, 45% 0, 50% 3%, 55% 0, 60% 3%, 65% 0, 70% 3%, 75% 0, 80% 3%, 85% 0, 90% 3%, 95% 0, 100% 3%, 100% 100%, 0 100%); }
+.sacchetto .scacchi { align-self: stretch; border-width: .4mm 0; }
+.sacchetto .logo { width: 38mm; height: 38mm; }
+.sacchetto p { font-size: 6.5pt; text-transform: none; letter-spacing: 0; }
+
+/* carta oleata */
+.carta { width: 76mm; height: 62mm; background: #fff; border: .3mm solid #bbb; transform: rotate(-5deg); display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); align-items: center; justify-items: center; overflow: hidden; }
+.carta .logo { width: 14mm; height: 14mm; transform: rotate(-12deg); }
+.carta img { height: 15mm; transform: rotate(-12deg); }
+
+/* adesivi */
+.adesivi { display: flex; flex-direction: column; align-items: center; gap: 4mm; }
+.adesivi .logo { width: 40mm; height: 40mm; }
+.chiudi { width: 70mm; height: 27mm; border: .3mm solid #999; border-radius: 2.5mm; background: #fff; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; text-align: center; --q: 3mm; }
+.chiudi .scacchi { border-width: .3mm 0; }
+.chiudi .corsivo { font-size: 16pt; }
+.chiudi .condensato { font-size: 7.5pt; }
+.chiudi p { font-size: 6.5pt; text-transform: none; letter-spacing: 0; margin-top: .4mm; }
+
+/* bicchiere */
+.bicchiere { display: flex; flex-direction: column; align-items: center; position: relative; padding-top: 14mm; }
+.cannuccia { position: absolute; top: 0; left: 56%; width: 3.2mm; height: 20mm; border: .5mm solid var(--nero); transform: rotate(8deg);
+  background: repeating-linear-gradient(135deg, var(--rosso) 0 2mm, #fff 2mm 4mm); }
+.coperchio { width: 44mm; height: 5mm; background: var(--rosso); border: .6mm solid var(--nero); border-radius: 2mm 2mm 0 0; position: relative; }
+.tazza { width: 40mm; height: 56mm; background: #fff; clip-path: polygon(0 0, 100% 0, 86% 100%, 14% 100%); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 3mm 0 0; --q: 4mm; border-top: .6mm solid var(--nero); }
+.tazza .logo { width: 27mm; height: 27mm; margin-top: 3mm; }
+.tazza .scacchi { align-self: stretch; border-width: .4mm 0; margin-bottom: 4mm; }
+.bordo { position: absolute; inset: 0; }
+
+/* scatola */
+.scatola { width: 72mm; height: 50mm; background: #fff; border: .6mm solid var(--nero); border-radius: 3mm 3mm 2mm 2mm; display: flex; flex-direction: column; align-items: center; --q: 4.5mm; overflow: hidden; }
+.scatola .tetto { align-self: stretch; height: 9mm; background: var(--rosso); border-bottom: .6mm solid var(--nero); }
+.scatola .logo { width: 31mm; height: 31mm; margin: auto; }
+.scatola .scacchi { align-self: stretch; border-width: .4mm 0 0; }
+
+/* cono */
+.cono { position: relative; padding-top: 16mm; }
+.patate { position: absolute; top: 0; left: 0; right: 0; height: 24mm; }
+.patate i { position: absolute; bottom: 0; width: 4.2mm; background: var(--senape); border: .5mm solid var(--nero); border-radius: 1mm; }
+.corpo { position: relative; width: 50mm; height: 58mm; background: var(--rosso); clip-path: polygon(0 0, 100% 0, 66% 100%, 34% 100%); display: flex; flex-direction: column; align-items: center; --q: 4.5mm; }
+.corpo .scacchi { align-self: stretch; border-width: .5mm 0; }
+.corpo img { height: 40mm; margin-top: 2mm; }
+</style></head><body><div class="foglio">
+<h1>ESEMPI DI PACKAGING</h1>
+<div class="griglia">
+  <div class="pezzo"><div class="scena"><div class="om"><div class="sacchetto"><div class="scacchi"></div><div class="logo"></div><p>Via Capitano F. Zuccarello 101 – Patti Marina (ME)</p><div class="scacchi"></div></div></div></div><p>Sacchetto da asporto</p></div>
+  <div class="pezzo"><div class="scena"><div class="om"><div class="carta" id="carta"></div></div></div><p>Carta oleata</p></div>
+  <div class="pezzo"><div class="scena"><div class="adesivi"><div class="logo om"></div><div class="om"><div class="chiudi"><div class="scacchi"></div><div><div class="corsivo">Il Giardino del Gusto</div><div class="condensato">SMASH BURGER</div><p>Via Capitano F. Zuccarello 101 – Patti Marina (ME)</p></div><div class="scacchi"></div></div></div></div></div><p>Adesivi tondo e chiudi-sacchetto</p></div>
+  <div class="pezzo"><div class="scena"><div class="bicchiere om"><div class="cannuccia"></div><div class="coperchio"></div><div class="tazza"><div class="logo"></div><div class="scacchi"></div></div></div></div><p>Bicchiere milkshake</p></div>
+  <div class="pezzo"><div class="scena"><div class="om"><div class="scatola"><div class="tetto"></div><div class="logo"></div><div class="scacchi"></div></div></div></div><p>Scatola burger</p></div>
+  <div class="pezzo"><div class="scena"><div class="cono om"><div class="patate" id="patate"></div><div class="corpo"><div class="scacchi"></div><img src="../menu-smash-burger/mascotte.png" alt=""></div></div></div><p>Cono patatine</p></div>
+</div>
+</div>
+<script>
+const c = document.getElementById('carta');
+for (let r = 0; r < 3; r++) for (let k = 0; k < 4; k++)
+  c.insertAdjacentHTML('beforeend', (r + k) % 2 ? '<img src="../menu-smash-burger/mascotte.png" alt="">' : '<div class="logo"></div>');
+const pt = document.getElementById('patate');
+[[8,17,-10],[13,22,-4],[18,19,3],[23,24,-2],[28,20,6],[33,23,2],[38,18,10]].forEach(([x,h,a]) =>
+  pt.insertAdjacentHTML('beforeend', `<i style="left:${x}mm;height:${h}mm;transform:rotate(${a}deg);transform-origin:bottom"></i>`));
+</script><script src="marchio.js"></script></body></html>

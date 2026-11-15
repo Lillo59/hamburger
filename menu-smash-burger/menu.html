@@ -302,6 +302,61 @@
     letter-spacing: 0.01em;
     white-space: nowrap;
   }
+
+  /* ---------- Scritte da cartone animato d'epoca ---------- */
+  @font-face { font-family: "Rammetto One"; src: url("fonts/rammetto-one-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+  .pagina .cartone {
+    font-family: "Rammetto One", "Bebas Neue", sans-serif;
+    font-weight: 400;
+    -webkit-text-stroke: 0.2em var(--nero);
+    paint-order: stroke fill;
+    text-shadow: 0.1em 0.12em 0 var(--nero);
+    letter-spacing: 0.03em;
+    white-space: pre;
+  }
+  .cartone .l { display: inline-block; }
+  .cartone .l:nth-child(3n+1) { transform: rotate(-5deg) translateY(-0.4mm); }
+  .cartone .l:nth-child(3n+2) { transform: rotate(3deg) translateY(0.5mm); }
+  .cartone .l:nth-child(3n) { transform: rotate(-1deg) translateY(-0.1mm); }
+
+  .titolo h2 {
+    font-size: 21pt;
+    line-height: 1.15;
+    color: var(--rosso);
+    background: none;
+    box-shadow: none;
+    padding: 0 1.5mm 0 1mm;
+  }
+  .titolo.petrolio h2 { background: none; color: var(--senape); }
+  .titolo { margin-bottom: 2.6mm; }
+
+  .sottoinsegna { font-size: 19pt; letter-spacing: 0.1em; color: var(--senape); margin-top: 1.5mm; }
+  .sottoinsegna span { margin-right: 0; padding-top: 0; letter-spacing: 0.1em; }
+  .fronte .sottoinsegna { font-size: 22pt; }
+  .retro .sottoinsegna { font-size: 17pt; }
+
+  .pagina .mese h2 { font-size: 14pt; line-height: 1.3; margin-bottom: 1.6mm; white-space: normal; }
+
+  .riquadro .testa { flex-direction: column; align-items: flex-start; gap: 1.5mm; }
+  .riquadro h2 { font-size: 17pt; line-height: 1.3; padding-top: 0; color: #fff; }
+  .riquadro.senape .testa { flex-direction: row; align-items: center; gap: 6mm; }
+  .riquadro.senape h2 { font-size: 20pt; }
+  .riquadro.senape h2 b { color: var(--rosso); }
+
+  /* raggi dietro la mascotte */
+  .mascotte { position: relative; }
+  .mascotte::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 47mm; height: 47mm;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 0.7mm solid var(--nero);
+    background: repeating-conic-gradient(var(--senape) 0 10deg, #F8D277 10deg 20deg);
+    box-shadow: 0.9mm 1mm 0 var(--nero);
+  }
+  .mascotte img { position: relative; }
 </style>
 </head>
 <body>
@@ -376,7 +431,7 @@
   <section class="riquadro rosso">
     <div class="interno">
       <div class="testa">
-        <h2>FALLO MENÙ <b>+4,90&nbsp;€</b></h2>
+        <h2>GIARDINO DEL GUSTO MENÙ <b>+4,90&nbsp;€</b></h2>
         <p>Aggiungi patatine classiche e bibita in lattina a qualsiasi burger</p>
       </div>
       <p class="extra">Extra: patty +2,50&nbsp;€ · bacon croccante +1,50&nbsp;€ · miele piccante +1,00&nbsp;€ · salse 0,80&nbsp;€</p>
@@ -507,6 +562,23 @@
 
   <div class="scacchi"></div>
 </section>
+<script>
+  // Lettere leggermente storte, come nei titoli dei cartoni d'epoca
+  document.querySelectorAll('.titolo h2, .sottoinsegna span, .mese h2, .riquadro h2').forEach(function (el) {
+    el.classList.add('cartone');
+    (function avvolgi(nodo) {
+      Array.prototype.slice.call(nodo.childNodes).forEach(function (n) {
+        if (n.nodeType === 1) return avvolgi(n);
+        var f = document.createDocumentFragment();
+        n.textContent.split('').forEach(function (c) {
+          if (c.trim() === '') return f.appendChild(document.createTextNode(c));
+          var sp = document.createElement('span'); sp.className = 'l'; sp.textContent = c; f.appendChild(sp);
+        });
+        nodo.replaceChild(f, n);
+      });
+    })(el);
+  });
+</script>
 
 </body>
 </html>

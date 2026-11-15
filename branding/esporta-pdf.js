@@ -4,7 +4,7 @@ const { chromium } = require('playwright');
 
 (async () => {
   const browser = await chromium.launch();
-  for (const nome of ['logo', 'carta-oleata', 'adesivi', 'sacchetto']) {
+  for (const nome of ['logo', 'carta-oleata', 'adesivi', 'sacchetto', 'esempi']) {
     const page = await browser.newPage();
     await page.goto('file://' + path.join(__dirname, nome + '.html'));
     await page.evaluate(() => document.fonts.ready);

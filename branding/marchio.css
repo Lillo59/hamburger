@@ -1,6 +1,7 @@
 @font-face { font-family: "Yellowtail"; src: url("../menu-smash-burger/fonts/yellowtail-latin-400-normal.woff2") format("woff2"); }
 @font-face { font-family: "Bebas Neue"; src: url("../menu-smash-burger/fonts/bebas-neue-latin-400-normal.woff2") format("woff2"); }
 @font-face { font-family: "Barlow Condensed"; font-weight: 600; src: url("../menu-smash-burger/fonts/barlow-condensed-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Rammetto One"; src: url("../menu-smash-burger/fonts/rammetto-one-latin-400-normal.woff2") format("woff2"); }
 :root {
   --rosso: #C4281C; --crema: #FCFAF5; --petrolio: #0E6B6B; --senape: #F2B632; --nero: #1A1A1A;
   --scacchi: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2'%3E%3Crect width='2' height='2' fill='%23fff'/%3E%3Crect width='1' height='1' fill='%231A1A1A'/%3E%3Crect x='1' y='1' width='1' height='1' fill='%231A1A1A'/%3E%3C/svg%3E");
@@ -11,5 +12,5 @@ body { color: var(--nero); font-family: "Barlow Condensed", "Arial Narrow", sans
 .foglio { position: relative; overflow: hidden; break-after: page; }
 .logo svg { display: block; width: 100%; height: 100%; }
 .corsivo { font-family: "Yellowtail", cursive; color: var(--rosso); line-height: 1.05; }
-.condensato { font-family: "Bebas Neue", sans-serif; letter-spacing: .2em; color: var(--petrolio); line-height: 1; }
+.condensato { font-family: "Rammetto One", sans-serif; letter-spacing: .08em; color: var(--senape); line-height: 1.2; -webkit-text-stroke: .2em var(--nero); paint-order: stroke fill; }
 .scacchi { background: var(--scacchi) 0 0 / var(--q, 8mm) var(--q, 8mm); height: var(--q, 8mm); border: .4mm solid var(--nero); box-sizing: content-box; }
