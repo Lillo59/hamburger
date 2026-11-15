@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il Giardino del Gusto – Smash Burger · Menù</title>
+<style>
+  @font-face { font-family: "Yellowtail"; src: url("fonts/yellowtail-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+  @font-face { font-family: "Bebas Neue"; src: url("fonts/bebas-neue-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+  @font-face { font-family: "Barlow"; src: url("fonts/barlow-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+  @font-face { font-family: "Barlow"; src: url("fonts/barlow-latin-500-normal.woff2") format("woff2"); font-weight: 500; }
+  @font-face { font-family: "Barlow"; src: url("fonts/barlow-latin-600-normal.woff2") format("woff2"); font-weight: 600; }
+  @font-face { font-family: "Barlow Condensed"; src: url("fonts/barlow-condensed-latin-600-normal.woff2") format("woff2"); font-weight: 600; }
+  @font-face { font-family: "Barlow Condensed"; src: url("fonts/barlow-condensed-latin-700-normal.woff2") format("woff2"); font-weight: 700; }
+
+  :root {
+    --rosso: #C4281C;
+    --crema: #FCFAF5;
+    --petrolio: #0E6B6B;
+    --senape: #F2B632;
+    --nero: #1A1A1A;
+    --scacchi: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2'%3E%3Crect width='2' height='2' fill='%23fff'/%3E%3Crect width='1' height='1' fill='%231A1A1A'/%3E%3Crect x='1' y='1' width='1' height='1' fill='%231A1A1A'/%3E%3C/svg%3E");
+  }
+
+  @page { size: A4 portrait; margin: 0; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    background: #5b5b5b;
+    color: var(--nero);
+    font-family: "Barlow", Arial, sans-serif;
+    font-size: 12pt;
+    line-height: 1.22;
+  }
+
+  /* ---------- Pagina A4 ---------- */
+  .pagina {
+    width: 210mm;
+    height: 297mm;
+    margin: 8mm auto;
+    padding: 9mm 11mm;
+    background: var(--crema);
+    display: flex;
+    flex-direction: column;
+    gap: 4mm;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 2mm 8mm rgba(0, 0, 0, .45);
+    break-after: page;
+    break-inside: avoid;
+  }
+  .pagina:last-child { break-after: auto; }
+
+  @media print {
+    body { background: none; }
+    .pagina { margin: 0; box-shadow: none; }
+  }
+
+  /* ---------- Fascia a scacchi ---------- */
+  .scacchi {
+    flex: none;
+    height: 7.52mm;
+    background: var(--scacchi) 0 0 / 7.52mm 7.52mm;
+    border: 0.5mm solid var(--nero);
+    box-sizing: content-box;
+    margin: 0 -0.5mm;
+  }
+
+  /* ---------- Insegna ---------- */
+  .testata {
+    flex: none;
+    text-align: center;
+  }
+  .insegna .logo {
+    display: block;
+    margin: 0 auto;
+    max-width: 120mm;
+    max-height: 28mm;
+    object-fit: contain;
+  }
+  .insegna .logo + .corsivo { display: none; }
+  .corsivo {
+    display: block;
+    font-family: "Yellowtail", "Brush Script MT", cursive;
+    font-size: 50pt;
+    line-height: 1.05;
+    color: var(--rosso);
+    text-shadow: 0.7mm 0.7mm 0 var(--senape);
+    padding: 0 3mm;
+  }
+  .sottoinsegna {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3.5mm;
+    margin-top: 0.5mm;
+    font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+    font-size: 25pt;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    color: var(--petrolio);
+  }
+  .sottoinsegna span { margin-right: -0.22em; padding-top: 1mm; }
+  .sottoinsegna::before,
+  .sottoinsegna::after {
+    content: "";
+    flex: 1;
+    height: 1.6mm;
+    border-top: 0.5mm solid var(--petrolio);
+    border-bottom: 0.5mm solid var(--petrolio);
+  }
+  .stella {
+    flex: none;
+    width: 5.5mm;
+    height: 5.5mm;
+    background: var(--senape);
+    clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+  .retro .corsivo { font-size: 36pt; }
+  .retro .insegna .logo { max-height: 22mm; }
+  .retro .sottoinsegna { font-size: 20pt; }
+
+  /* ---------- Foto ---------- */
+  .foto {
+    position: relative;
+    overflow: hidden;
+    border: 0.7mm solid var(--nero);
+    border-radius: 3mm;
+    background: var(--nero);
+    min-height: 26mm;
+  }
+  .foto img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .foto.mancante {
+    border: 0.6mm dashed var(--petrolio);
+    background: rgba(14, 107, 107, .06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .foto.mancante::after {
+    content: attr(data-nome);
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-weight: 600;
+    font-size: 13pt;
+    letter-spacing: 0.04em;
+    color: var(--petrolio);
+  }
+  .hero { flex: 1 1 32mm; min-height: 20mm; }
+
+  /* ---------- Sezioni ---------- */
+  .sezione { display: flex; flex-direction: column; }
+  .titolo {
+    display: flex;
+    align-items: center;
+    gap: 3mm;
+    margin-bottom: 2mm;
+  }
+  .titolo h2 {
+    flex: none;
+    font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+    font-weight: 400;
+    font-size: 27pt;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--crema);
+    background: var(--rosso);
+    padding: 1.9mm 4mm 0.9mm;
+    border-radius: 1.2mm;
+    box-shadow: 0.8mm 0.8mm 0 var(--nero);
+  }
+  .titolo.petrolio h2 { background: var(--petrolio); }
+  .titolo::after {
+    content: "";
+    flex: 1;
+    height: 1.6mm;
+    border-top: 0.5mm solid var(--nero);
+    border-bottom: 0.5mm solid var(--nero);
+  }
+  .titolo .nota {
+    flex: none;
+    order: 2;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-weight: 700;
+    font-size: 13pt;
+    line-height: 1;
+    background: var(--senape);
+    color: var(--nero);
+    padding: 1.5mm 3mm;
+    border-radius: 10mm;
+  }
+
+  /* ---------- Voci ---------- */
+  .voci { display: flex; flex-direction: column; gap: 2.4mm; }
+  .riga {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5mm;
+  }
+  .riga h3 {
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-weight: 700;
+    font-size: 17pt;
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+  }
+  .punti {
+    flex: 1;
+    min-width: 4mm;
+    border-bottom: 0.55mm dotted var(--nero);
+    transform: translateY(-1mm);
+    opacity: .55;
+  }
+  .prezzo {
+    flex: none;
+    font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+    font-size: 19pt;
+    line-height: 1;
+    color: var(--rosso);
+    white-space: nowrap;
+  }
+  .voce p { margin-top: 0.4mm; }
+
+  .colonne { display: grid; gap: 6mm; }
+  .due { grid-template-columns: 1fr 1fr; }
+
+  /* ---------- Fronte ---------- */
+  .fronte { gap: 3.4mm; }
+  .fronte .voci { gap: 2mm; }
+  .manzo { grid-template-columns: 131mm 1fr; flex: none; }
+  .titolo.intera { flex: none; margin-bottom: -1.5mm; }
+  .laterale { display: flex; flex-direction: column; gap: 3mm; }
+  .laterale .foto { flex: 1 1 0; }
+
+  .mese {
+    flex: none;
+    background: var(--petrolio);
+    color: var(--crema);
+    border-radius: 3mm;
+    padding: 3mm 4mm 3mm;
+    box-shadow: 0.8mm 0.8mm 0 var(--nero);
+  }
+  .mese h2 {
+    font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+    font-weight: 400;
+    font-size: 24pt;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--senape);
+    margin-bottom: 1mm;
+  }
+
+  .riquadro {
+    flex: none;
+    border-radius: 3mm;
+    padding: 1.2mm;
+    box-shadow: 0.8mm 0.8mm 0 var(--nero);
+  }
+  .riquadro .interno {
+    border: 0.5mm dashed currentColor;
+    border-radius: 2.2mm;
+    padding: 3mm 5mm;
+  }
+  .riquadro.rosso { background: var(--rosso); color: var(--crema); }
+  .riquadro.senape { background: var(--senape); color: var(--nero); }
+  .riquadro .testa {
+    display: flex;
+    align-items: center;
+    gap: 5mm;
+  }
+  .riquadro h2 {
+    flex: none;
+    font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+    font-weight: 400;
+    font-size: 34pt;
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    padding-top: 1.2mm;
+  }
+  .riquadro h2 b {
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .riquadro.rosso h2 b { color: var(--senape); }
+  .riquadro.senape h2 b { color: var(--rosso); }
+  .riquadro .testa p {
+    font-weight: 600;
+    font-size: 13pt;
+    line-height: 1.2;
+  }
+  .riquadro .extra {
+    margin-top: 2mm;
+    padding-top: 2mm;
+    border-top: 0.4mm solid rgba(252, 250, 245, .6);
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-weight: 600;
+    font-size: 13.5pt;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+  }
+
+  /* ---------- Retro ---------- */
+  .dividere { grid-template-columns: 108mm 1fr; flex: 1 1 auto; }
+  .dividere .foto { min-height: 30mm; }
+  .retro .voci { gap: 2.6mm; }
+  .retro .colonne.due { flex: none; column-gap: 9mm; }
+
+  .piede {
+    flex: none;
+    text-align: center;
+    border-top: 0.5mm solid var(--nero);
+    padding-top: 2.4mm;
+  }
+  .piede .allergeni { font-weight: 600; font-size: 12.5pt; color: var(--petrolio); }
+  .piede .recapiti {
+    margin-top: 1mm;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-weight: 600;
+    font-size: 13pt;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<!-- ======================= FRONTE ======================= -->
+<section class="pagina fronte">
+  <div class="scacchi"></div>
+
+  <header class="testata">
+    <div class="insegna">
+      <img class="logo" src="logo.png" alt="Il Giardino del Gusto" onerror="this.remove()">
+      <span class="corsivo">Il Giardino del Gusto</span>
+    </div>
+    <div class="sottoinsegna"><i class="stella"></i><span>SMASH BURGER</span><i class="stella"></i></div>
+  </header>
+
+  <figure class="foto hero" data-nome="hero.jpg">
+    <img src="foto/hero.jpg" alt="" onerror="this.parentNode.classList.add('mancante');this.remove()">
+  </figure>
+
+  <div class="titolo intera">
+    <h2>SMASH DI MANZO</h2>
+    <span class="nota">Tutti con doppio smash 2&nbsp;×&nbsp;90&nbsp;g</span>
+  </div>
+
+  <div class="colonne manzo">
+    <section class="sezione">
+      <div class="voci">
+        <article class="voce">
+          <div class="riga"><h3>Giardino Classico</h3><span class="punti"></span><span class="prezzo">10,50&nbsp;€</span></div>
+          <p>Cheddar fuso, lattuga, pomodoro, cipolla rossa, salsa Giardino</p>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Oklahoma Onion</h3><span class="punti"></span><span class="prezzo">11,00&nbsp;€</span></div>
+          <p>Cipolla sottile schiacciata nella carne, doppio cheddar, cetriolini, senape</p>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Bacon Smoke</h3><span class="punti"></span><span class="prezzo">11,90&nbsp;€</span></div>
+          <p>Cheddar affumicato, bacon croccante, cipolla fritta croccante, salsa BBQ</p>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Cheese Skirt</h3><span class="punti"></span><span class="prezzo">12,00&nbsp;€</span></div>
+          <p>Corona di cheddar croccante, cipolla caramellata, cetriolini, salsa Giardino</p>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Siciliano</h3><span class="punti"></span><span class="prezzo">12,90&nbsp;€</span></div>
+          <p>Provola affumicata, pomodorino confit, basilico fresco, pesto di pistacchio di Bronte, cipolla caramellata</p>
+        </article>
+      </div>
+    </section>
+
+    <aside class="laterale">
+      <figure class="foto" data-nome="oklahoma.jpg">
+        <img src="foto/oklahoma.jpg" alt="" onerror="this.parentNode.classList.add('mancante');this.remove()">
+      </figure>
+      <figure class="foto" data-nome="cheese-skirt.jpg">
+        <img src="foto/cheese-skirt.jpg" alt="" onerror="this.parentNode.classList.add('mancante');this.remove()">
+      </figure>
+    </aside>
+  </div>
+
+  <div class="colonne manzo">
+    <section class="sezione">
+      <div class="titolo petrolio"><h2>POLLO E VEGETARIANO</h2></div>
+      <div class="voci">
+        <article class="voce">
+          <div class="riga"><h3>Hot Honey Chicken</h3><span class="punti"></span><span class="prezzo">10,90&nbsp;€</span></div>
+          <p>Pollo croccante, cheddar, cetriolini, insalata di cavolo, miele piccante</p>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Green Garden</h3><span class="punti"></span><span class="prezzo">10,90&nbsp;€</span></div>
+          <p>Smash vegetale, cheddar, avocado, lattuga, pomodoro, salsa yogurt</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="mese" style="align-self: center;">
+      <h2>SMASH DEL MESE</h2>
+      <p>Edizione limitata che cambia ogni mese: la trovi sulla lavagna e sui nostri social.</p>
+    </section>
+  </div>
+
+  <section class="riquadro rosso">
+    <div class="interno">
+      <div class="testa">
+        <h2>FALLO MENÙ <b>+4,90&nbsp;€</b></h2>
+        <p>Aggiungi patatine classiche e bibita in lattina a qualsiasi burger</p>
+      </div>
+      <p class="extra">Extra: patty +2,50&nbsp;€ · bacon croccante +1,50&nbsp;€ · miele piccante +1,00&nbsp;€ · salse 0,80&nbsp;€</p>
+    </div>
+  </section>
+
+  <div class="scacchi"></div>
+</section>
+
+<!-- ======================= RETRO ======================= -->
+<section class="pagina retro">
+  <div class="scacchi"></div>
+
+  <header class="testata">
+    <div class="insegna">
+      <img class="logo" src="logo.png" alt="Il Giardino del Gusto" onerror="this.remove()">
+      <span class="corsivo">Il Giardino del Gusto</span>
+    </div>
+    <div class="sottoinsegna"><i class="stella"></i><span>SMASH BURGER</span><i class="stella"></i></div>
+  </header>
+
+  <div class="colonne dividere">
+    <section class="sezione">
+      <div class="titolo"><h2>DA DIVIDERE</h2></div>
+      <div class="voci">
+        <article class="voce">
+          <div class="riga"><h3>Smash Tacos (2 pz)</h3><span class="punti"></span><span class="prezzo">9,50&nbsp;€</span></div>
+          <p>Smash sulla tortilla, cheddar, lattuga, cetriolini, salsa burger</p>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Tenders Hot Honey (4 pz)</h3><span class="punti"></span><span class="prezzo">7,50&nbsp;€</span></div>
+          <p>Filetti di pollo croccanti con miele piccante</p>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Fried Pickles</h3><span class="punti"></span><span class="prezzo">5,50&nbsp;€</span></div>
+          <p>Cetriolini fritti croccanti con salsa ranch</p>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Onion Rings (8 pz)</h3><span class="punti"></span><span class="prezzo">5,00&nbsp;€</span></div>
+        </article>
+      </div>
+    </section>
+
+    <figure class="foto" data-nome="smash-tacos.jpg">
+      <img src="foto/smash-tacos.jpg" alt="" onerror="this.parentNode.classList.add('mancante');this.remove()">
+    </figure>
+  </div>
+
+  <div class="colonne due">
+    <section class="sezione">
+      <div class="titolo petrolio"><h2>PATATINE</h2></div>
+      <div class="voci">
+        <article class="voce">
+          <div class="riga"><h3>Classiche</h3><span class="punti"></span><span class="prezzo">3,90&nbsp;€</span></div>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Cacio e Pepe</h3><span class="punti"></span><span class="prezzo">5,90&nbsp;€</span></div>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Cheese &amp; Bacon</h3><span class="punti"></span><span class="prezzo">6,50&nbsp;€</span></div>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Loaded Smash Fries</h3><span class="punti"></span><span class="prezzo">7,90&nbsp;€</span></div>
+          <p>(con smash sbriciolato, cheddar, cipolla, salsa Giardino)</p>
+        </article>
+      </div>
+    </section>
+
+    <div style="display:flex; flex-direction:column; gap:5mm;">
+      <section class="sezione">
+        <div class="titolo"><h2>BIBITE</h2></div>
+        <div class="voci">
+          <article class="voce">
+            <div class="riga"><h3>Acqua 0,50 L</h3><span class="punti"></span><span class="prezzo">1,50&nbsp;€</span></div>
+          </article>
+          <article class="voce">
+            <div class="riga"><h3>Bibita in lattina</h3><span class="punti"></span><span class="prezzo">2,50&nbsp;€</span></div>
+          </article>
+          <article class="voce">
+            <div class="riga"><h3>Birra Artigianale 33 cl</h3><span class="punti"></span><span class="prezzo">5,00&nbsp;€</span></div>
+          </article>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="colonne due">
+    <section class="sezione">
+      <div class="titolo"><h2>MILKSHAKE</h2></div>
+      <div class="voci">
+        <article class="voce">
+          <div class="riga"><h3>Vaniglia o Cioccolato</h3><span class="punti"></span><span class="prezzo">5,00&nbsp;€</span></div>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Pistacchio Dubai Style</h3><span class="punti"></span><span class="prezzo">6,50&nbsp;€</span></div>
+          <p>(pistacchio di Bronte, cioccolato croccante, kataifi)</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="sezione">
+      <div class="titolo petrolio"><h2>DOLCI</h2></div>
+      <div class="voci">
+        <article class="voce">
+          <div class="riga"><h3>Cheesecake al Pistacchio</h3><span class="punti"></span><span class="prezzo">5,50&nbsp;€</span></div>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Brownie con Gelato</h3><span class="punti"></span><span class="prezzo">5,00&nbsp;€</span></div>
+        </article>
+        <article class="voce">
+          <div class="riga"><h3>Tiramisù della Casa</h3><span class="punti"></span><span class="prezzo">5,00&nbsp;€</span></div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <section class="riquadro senape">
+    <div class="interno">
+      <div class="testa">
+        <h2>Menù Bimbi <b>8,50&nbsp;€</b></h2>
+        <p>Mini smash burger + patatine piccole + bibita</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="piede">
+    <p class="allergeni">Per allergeni e intolleranze chiedi al nostro staff.</p>
+    <p class="recapiti">Il Giardino del Gusto · Via Capitano F. Zuccarello 101, Patti Marina (ME) · [TELEFONO] · [INSTAGRAM]</p>
+  </footer>
+
+  <div class="scacchi"></div>
+</section>
+
+</body>
+</html>
